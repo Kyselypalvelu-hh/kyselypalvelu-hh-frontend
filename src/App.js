@@ -1,10 +1,11 @@
-import './App.css';
+import Box from '@mui/material/Box';
+import { QuestionList } from './components/QuestionList';
 
 function App() {
   return (
-    <div>
-      <h1> Eka kommitti</h1>
-    </div>
+    <Box>
+      <QuestionList />
+    </Box>
   );
 }
 
