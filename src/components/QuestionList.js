@@ -1,8 +1,9 @@
 import { Card, Box, CardContent, List, ListItem } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 //TESTIDATA (TÄHÄN TULEE FETCH JAVA REST-APISTA)
 //FETCH QUESTIONS
+
 const testQuestionList = [
   "QuestionOne",
   "QuestionTwo",
@@ -12,6 +13,18 @@ const testQuestionList = [
 ];
 
 export const QuestionList = () => {
+  const [questions, setQuestion] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/questions")
+      .then((response) => {
+        response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  }, []);
+
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Card
