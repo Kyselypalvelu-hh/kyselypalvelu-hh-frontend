@@ -1,28 +1,20 @@
 import { Card, Box, CardContent, List, ListItem } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
-//TESTIDATA (TÄHÄN TULEE FETCH JAVA REST-APISTA)
-//FETCH QUESTIONS
-
-const testQuestionList = [
-  "QuestionOne",
-  "QuestionTwo",
-  "QuestionThree",
-  "QuestionFour",
-  "QuestionFive",
-];
-
 export const QuestionList = () => {
-  const [questions, setQuestion] = useState([]);
-
+  const [questions, setQuestions] = useState([]);
+  // Fetch all questions
+  //CHANGE URL WHEN DEPLOYED TO HEROKU
   useEffect(() => {
     fetch("http://localhost:8080/questions")
-      .then((response) => {
-        response.json();
-      })
+      .then((response) =>
+          response.json()
+          )
       .then((data) => {
         console.log(data);
-      });
+        setQuestions(data)
+      })
+      .catch(err => console.log(err.message))
   }, []);
 
   return (
@@ -37,9 +29,9 @@ export const QuestionList = () => {
       >
         <CardContent>
           <List>
-            {testQuestionList.map((question) => {
-              //KEY TULEE OLEMAAN DATA.ID TYYPPINEN
-              return <ListItem key={question}>{question}</ListItem>;
+            {/* List all questions*/}
+            {questions.map((question) => {
+              return <ListItem key={question.questionId}>{question.title}</ListItem>;
             })}
           </List>
         </CardContent>
