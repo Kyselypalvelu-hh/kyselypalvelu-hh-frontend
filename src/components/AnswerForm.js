@@ -9,7 +9,11 @@ export default function AnswerForm(props) {
         return (
           <div className="form-group" key={question.title}>
             <label>{question.title}</label>
-            <input type="text" className="form-control" />
+            <textarea
+              style={{ height: "100px" }}
+              type="text"
+              className="form-control"
+            />
           </div>
         );
       })}

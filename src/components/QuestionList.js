@@ -54,12 +54,13 @@ export const QuestionList = () => {
       <Card
         sx={{
           bgcolor: "teal",
-          maxWidth: 400,
+          minWidth: 800,
+          maxWidth: 800,
           display: "flex",
           justifyContent: "center",
         }}
       >
-        <CardContent>
+        <CardContent sx={{ width: "500px" }}>
           <Typography variant="h6">
             Show all questions of selected query
           </Typography>
