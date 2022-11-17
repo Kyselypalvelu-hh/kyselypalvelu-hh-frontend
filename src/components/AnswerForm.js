@@ -12,7 +12,7 @@ export default function AnswerForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await fetch("https://httpbin.org/post", {
+      let res = await fetch("http://localhost:8080/answers", {
         method: "POST",
         body: JSON.stringify({
           textAnswers: [
