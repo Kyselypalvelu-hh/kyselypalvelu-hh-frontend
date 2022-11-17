@@ -11,13 +11,22 @@ export default function AnswerForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(props.shownQuestions);
     try {
       let res = await fetch("http://localhost:8080/answers", {
         method: "POST",
         body: JSON.stringify({
-          textAnswers: [
-            { answer: vastausYksi, question: props.shownQuestions[0] },
-            { answer: vastausKaksi, question: props.shownQuestions[1] },
+          textAnswer: [
+            {
+              answer: vastausYksi,
+              /* question: props.shownQuestions[0].title, */
+              question: { questionId: props.shownQuestions[0].questionId },
+            },
+            {
+              answer: vastausKaksi,
+              /* question: props.shownQuestions[1].title, */
+              question: { questionId: props.shownQuestions[1].questionId },
+            },
           ],
           choiceAnswer: [],
         }),
