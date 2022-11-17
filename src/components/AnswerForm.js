@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 export default function AnswerForm(props) {
-  const [vastausYksi, setVastausYksi] = useState("");
-  const [vastausKaksi, setVastausKaksi] = useState("");
+  const [answerOne, setAnswerOne] = useState("");
+  const [answerTwo, setAsnwerTwo] = useState("");
   /*  const [answerData, setAnswerData] = useState({
     vastausYksi: "",
     vastausKaksi: "",
@@ -15,15 +15,19 @@ export default function AnswerForm(props) {
     try {
       let res = await fetch("http://localhost:8080/answers", {
         method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
           textAnswer: [
             {
-              answer: vastausYksi,
+              answer: answerOne,
               /* question: props.shownQuestions[0].title, */
               question: { questionId: props.shownQuestions[0].questionId },
             },
             {
-              answer: vastausKaksi,
+              answer: answerTwo,
               /* question: props.shownQuestions[1].title, */
               question: { questionId: props.shownQuestions[1].questionId },
             },
@@ -33,8 +37,8 @@ export default function AnswerForm(props) {
       });
       let resJson = await res.json();
       if (res.status === 200) {
-        setVastausYksi("");
-        setVastausKaksi("");
+        setAnswerOne("");
+        setAsnwerTwo("");
         setMessage("Answers posted successfully");
       } else {
         setMessage("Some error occured");
@@ -73,20 +77,22 @@ export default function AnswerForm(props) {
         <textarea
           style={{ height: "100px" }}
           type="text"
+          value={answerOne}
           className="form-control"
           onChange={(e) => {
-            setVastausYksi(e.target.value);
-            console.log(vastausYksi);
+            setAnswerOne(e.target.value);
+            console.log(answerOne);
           }}
         />
         <label>{props.shownQuestions[1].title}</label>
         <textarea
           style={{ height: "100px" }}
           type="text"
+          value={answerTwo}
           className="form-control"
           onChange={(e) => {
-            setVastausKaksi(e.target.value);
-            console.log(vastausKaksi);
+            setAsnwerTwo(e.target.value);
+            console.log(answerTwo);
           }}
         />
       </div>
