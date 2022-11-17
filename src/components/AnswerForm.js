@@ -13,7 +13,7 @@ export default function AnswerForm(props) {
     e.preventDefault();
     console.log(props.shownQuestions);
     try {
-      let res = await fetch("http://localhost:8080/answers", {
+      let res = await fetch("https://swd022-kyselypalvelu-back.herokuapp.com/answers", {
         method: "POST",
         headers: {
           Accept: "application/json",

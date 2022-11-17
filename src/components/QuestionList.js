@@ -19,7 +19,7 @@ export const QuestionList = () => {
   // FETCH ALL QUESTIONS
   //CHANGE URL WHEN DEPLOYED TO HEROKU
   useEffect(() => {
-    fetch("http://localhost:8080/questions")
+    fetch("https://swd022-kyselypalvelu-back.herokuapp.com/questions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -31,7 +31,7 @@ export const QuestionList = () => {
   //FETCH ALL QUERIES
   //CHANGE URL WHEN DEPLOYED
   useEffect(() => {
-    fetch("http://localhost:8080/queries")
+    fetch("https://swd022-kyselypalvelu-back.herokuapp.com/queries")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
