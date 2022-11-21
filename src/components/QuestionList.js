@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import AnswerForm from "./AnswerForm";
 
 export const QuestionList = () => {
@@ -99,6 +100,7 @@ export const QuestionList = () => {
           )}
         </CardContent>
       </Card>
+      <Outlet></Outlet>
     </Box>
   );
 };
