@@ -74,12 +74,17 @@ export const QuestionList = () => {
                   let shownQ = [];
                   //LOOP THROUGH ALL QUESTIONS OF PRESSED BUTTON (QUERY)
                   //AND ADD THEM TO TEMPORARY ARRAY(shownQ)
-                  for (let question of query.textQuestions) {
-                    shownQ.push(question);
+                  for (let openQuestion of query.textQuestions) {
+                    shownQ.push(openQuestion);
+                  }
+                  for (let multipleQuestion of query.choiceQuestions) {
+                    shownQ.push(multipleQuestion);
                   }
                   //SETS STATE SO WE CAN GET THIS DATA OUTSIDE OF THIS BUTTON
                   //DATA NEEDED IN THE LIST BELOW
+                  console.log(shownQ)
                   setShownQuestions(shownQ);
+                  console.log(shownQuestions)
                 }}
               >
                 {query.title}

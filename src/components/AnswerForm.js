@@ -51,7 +51,7 @@ export default function AnswerForm(props) {
   return (
     //BOOTSTRAP FORM
     /*   <form onSubmit={handleSubmit}>
-      {props.shownQuestions.map((question) => {
+      {props.shownQuestions.map((question) =>np {
         return (
           <div className="form-group" key={question.title}>
             <label>{question.title}</label>
@@ -95,8 +95,19 @@ export default function AnswerForm(props) {
             console.log(answerTwo);
           }}
         />
+        <label>{props.shownQuestions[2].question}</label>
+        {/* <textarea
+          style={{ height: "100px" }}
+          type="text"
+          value={answerOne}
+          className="form-control"
+          onChange={(e) => {
+            setAnswerOne(e.target.value);
+            console.log(answerOne);
+          }}
+        />  */}
       </div>
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary" onClick={console.log(props.shownQuestions)}>
         Submit
       </button>
       <div>{message ? <p>{message}</p> : null}</div>
