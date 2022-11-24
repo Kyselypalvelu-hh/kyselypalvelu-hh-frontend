@@ -6,16 +6,17 @@ import {
   Route
 } from 'react-router-dom';
 import ViewAnswers from './components/ViewAnswers';
+import { Typography } from '@mui/material';
 
 function App() {
   return (
     <Box>
-      <QuestionList />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<QuestionList></QuestionList>}></Route>
-          <Route path="/viewanswers:id" element={<ViewAnswers></ViewAnswers>}></Route>
-      </Routes>
+          <Route path="/viewanswers/:id" element={<ViewAnswers></ViewAnswers>}></Route>
+          <Route path="*" element={<Typography>Routing error</Typography>}></Route>
+        </Routes>
       </BrowserRouter>
     </Box>
   );
