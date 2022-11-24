@@ -31,30 +31,60 @@ function ViewAnswers() {
     useEffect(() => { fetchAnswers() }, [])
 
     if (status.length === 0) {
-        let key = 0
         return (
             <Box>
                 {answers.map(question => {
-                    key++
                     return (
-                        <Box>
-                            <Typography key={key}>QUESTION: {question.textAnswer[0].question.title}</Typography>
+                        <Box key={question.questionId} sx={{marginTop: 10}}>
+
                             <TableContainer>
                                 <Table>
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>answer id</TableCell>
-                                            <TableCell>answer</TableCell>
+                                            <TableCell sx={{maxWidth: 35}}>answer id</TableCell>
+                                            
+                                            {question.question.questionType !== 'text' //Map headers for multiple chice questions
+                                                ? question.question.choiceOptions.map(option => {
+                                                    return (
+                                                        <TableCell key={option.optionId}>{option.option}</TableCell>
+                                                    )
+                                                })
+                                                : <TableCell>answer</TableCell>
+                                            }
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {question.textAnswer.map(answer => {
-                                            return (
-                                                <TableRow key={answer.answerId}>
-                                                    <TableCell>{answer.answerId}</TableCell>
-                                                    <TableCell>{answer.answer}</TableCell>
-                                                </TableRow>
-                                        )})}
+                                        {
+                                        //show text question answers
+                                        question.question.questionType === 'text' // ?-> true, : ->else
+                                            ? question.textAnswer.map(answer => {
+                                                return (
+                                                    <TableRow key={answer.answerId}>
+                                                        <TableCell>{answer.answerId}</TableCell>
+                                                        <TableCell>{answer.answer}</TableCell>
+                                                    </TableRow>
+                                                )
+                                            })
+                                                
+                                                : question.choiceAnswer.map(answer => {
+                                                //show answers for multiple choice questions (corrext option is shown as X)
+                                                //TODO currently only works for radioquestions, add mapping for answer.options[]
+                                                return (
+                                                    <TableRow key={answer.answerId}>
+                                                        <TableCell>{answer.answerId}</TableCell>
+                                                        {answer.question.choiceOptions.map(option => {
+                                                            if(answer.options[0].optionId === option.optionId){
+                                                                return(<TableCell key={option.optionId}>X</TableCell>)
+                                                            } else {
+                                                                return(<TableCell key={option.optionId}></TableCell>)
+                                                            }
+                                                            
+                                                        })}
+                                                    </TableRow>
+                                                )
+                                            })
+
+                                        }
                                     </TableBody>
                                 </Table>
                             </TableContainer>
