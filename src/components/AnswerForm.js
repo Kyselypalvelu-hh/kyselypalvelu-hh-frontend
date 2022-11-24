@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 export default function AnswerForm(props) {
   const [answerOne, setAnswerOne] = useState("");
@@ -9,11 +10,15 @@ export default function AnswerForm(props) {
   }); */
   const [message, setMessage] = useState("");
 
+  const local = 'http://localhost:8080/'
+  const server = "https://swd022-kyselypalvelu-back.herokuapp.com/"
+  const url = local
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(props.shownQuestions);
     try {
-      let res = await fetch("https://swd022-kyselypalvelu-back.herokuapp.com/answers", {
+      let res = await fetch(url + "answers", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -111,6 +116,7 @@ export default function AnswerForm(props) {
         Submit
       </button>
       <div>{message ? <p>{message}</p> : null}</div>
+      <Outlet></Outlet>
     </form>
   );
 }

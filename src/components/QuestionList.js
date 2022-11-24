@@ -17,10 +17,14 @@ export const QuestionList = () => {
   const [onError, setOnError] = useState("Loading...");
   const [shownQuestions, setShownQuestions] = useState([]);
 
-  // FETCH ALL QUESTIONS
+  const local = 'http://localhost:8080/'
+  const server = "https://swd022-kyselypalvelu-back.herokuapp.com/"
+  const url = local
+
+  //FETCH ALL QUESTIONS
   //CHANGE URL WHEN DEPLOYED TO HEROKU
   useEffect(() => {
-    fetch("https://swd022-kyselypalvelu-back.herokuapp.com/questions")
+    fetch(url + "uestions")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -32,7 +36,7 @@ export const QuestionList = () => {
   //FETCH ALL QUERIES
   //CHANGE URL WHEN DEPLOYED
   useEffect(() => {
-    fetch("https://swd022-kyselypalvelu-back.herokuapp.com/queries")
+    fetch(url + "queries")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

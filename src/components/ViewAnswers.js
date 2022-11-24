@@ -8,9 +8,13 @@ function ViewAnswers() {
     const [status, setStatus] = useState('Fetching')
     const [answers, setAnswers] = useState([])
 
+    const local = 'http://localhost:8080/'
+    const server = "https://swd022-kyselypalvelu-back.herokuapp.com/"
+    const url = local
+
     const fetchAnswers = async () => {
         try {
-            const connection = await fetch('http://localhost:8080/queryanswers/' + id)
+            const connection = await fetch(url + 'queryanswers/' + id)
             const json = await connection.json()
             setAnswers(json)
 
@@ -23,7 +27,7 @@ function ViewAnswers() {
         }
     }
 
-    //do fetch inside {}
+    //do fetch inside{}
     useEffect(() => { fetchAnswers() }, [])
 
     if (status.length === 0) {
