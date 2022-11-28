@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import RadioQuestion from "./RadioQuestion";
 
 export default function AnswerForm(props) {
   const [answerOne, setAnswerOne] = useState("");
   const [answerTwo, setAsnwerTwo] = useState("");
+  const [answers, setAnswers] = useState("");
   /*  const [answerData, setAnswerData] = useState({
     vastausYksi: "",
     vastausKaksi: "",
   }); */
   const [message, setMessage] = useState("");
 
-  const local = 'http://localhost:8080/'
-  const server = "https://swd022-kyselypalvelu-back.herokuapp.com/"
-  const url = local
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(props.shownQuestions);
+    console.log(props.choiceQuestions);
     try {
-      let res = await fetch(url + "answers", {
+      let res = await fetch("https://swd022-kyselypalvelu-back.herokuapp.com/answers", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -54,31 +52,11 @@ export default function AnswerForm(props) {
   };
 
   return (
-    //BOOTSTRAP FORM
-    /*   <form onSubmit={handleSubmit}>
-      {props.shownQuestions.map((question) =>np {
-        return (
-          <div className="form-group" key={question.title}>
-            <label>{question.title}</label>
-            <textarea
-              style={{ height: "100px" }}
-              type="text"
-              className="form-control"
-              onChange={(e) => {
-                setAnswerData({ vastausYksi: e.target.value });
-                console.log(answerData);
-              }}
-            />
-          </div>
-        );
-      })}
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
-    </form> */
+
     <form onSubmit={handleSubmit}>
+      
       <div className="form-group" key={props.shownQuestions.title}>
-        <label>{props.shownQuestions[0].title}</label>
+        {/* <label>{props.shownQuestions[0].title}</label>
         <textarea
           style={{ height: "100px" }}
           type="text"
@@ -99,9 +77,32 @@ export default function AnswerForm(props) {
             setAsnwerTwo(e.target.value);
             console.log(answerTwo);
           }}
-        />
-        <label>{props.shownQuestions[2].question}</label>
-        {/* <textarea
+        /> */}
+                  <div className="openTextQuestion">
+          {props.shownQuestions.map((openQuestion) => (
+            <div key= {openQuestion.questionId}>
+            <label>{openQuestion.title}</label>
+            <textarea
+            style={{ height: "100px" }}
+            type="text"
+            value={answerTwo}
+            className="form-control"
+            onChange={(e) => {
+              setAsnwerTwo(e.target.value);
+              console.log(answerTwo);
+            }}
+          />
+                    </div>
+          ))}
+
+        </div>
+        <div className="choiceQuestions" >
+          {props.choiceQuestions.map((choiceQuestion) => (
+            <RadioQuestion key = {choiceQuestion.questionId} question = {choiceQuestion}/>
+          ))}
+        </div>
+        {/*<label>{props.shownQuestions[2].question}</label>
+         <textarea
           style={{ height: "100px" }}
           type="text"
           value={answerOne}
@@ -111,12 +112,18 @@ export default function AnswerForm(props) {
             console.log(answerOne);
           }}
         />  */}
+
+  {/*       {props.ChoiceQuestions.map((choiceQuestion) => 
+    <div key = {choiceQuestion.questionId}> 
+    <p>{choiceQuestion.id}</p>
+    </div>
+    )} */}
+
       </div>
       <button type="submit" className="btn btn-primary" onClick={console.log(props.shownQuestions)}>
         Submit
       </button>
       <div>{message ? <p>{message}</p> : null}</div>
-      <Outlet></Outlet>
     </form>
   );
 }

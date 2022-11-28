@@ -14,7 +14,7 @@ function ViewAnswers() {
 
     const fetchAnswers = async () => {
         try {
-            const connection = await fetch(url + 'queryanswers/' + id)
+            const connection = await fetch(server + 'queryanswers/' + id)
             const json = await connection.json()
             setAnswers(json)
 
