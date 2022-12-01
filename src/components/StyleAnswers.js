@@ -1,4 +1,4 @@
-import { Box, Grid, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Grid, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
 
@@ -110,7 +110,8 @@ function StyleAnswers(props) {
         title: "",
     };
 
-    if (status.length === 0){
+    if (status.length === 0) {
+        /*
         return (
             <Box>
                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -169,6 +170,64 @@ function StyleAnswers(props) {
                         </Grid>
                     )
             })}
+            </Box>
+        )
+        */
+        
+        return (
+            <Box>
+                <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",marginTop: 3}}>
+                    <Paper sx={{margin: 1, padding: 2, textAlign: "center", width: "fit-content", }}>
+                        <Typography variant="h3">{query.title}</Typography>
+                        <Typography>{query.description}</Typography>
+                    </Paper>
+                </Box>
+
+                <Grid container spacing={"2%"} sx={{margin:"1%",width: "96%"}}>
+                    
+                    {styledArray.map(styled => {
+                        const show = [
+                            ["plaa", "plaa"]
+                        ]
+                        for (let i = 0; i < styled.options.length; i++) {
+                            show.push([styled.options[i].option, styled.answerAmount[i].count])
+                        }
+                        return (
+                            <Grid item sx={{width: "50%"}}>
+                                <Card>
+                                    <CardHeader title={styled.question}></CardHeader>
+                                    <CardContent>
+                                    <Chart
+                                        chartType="PieChart"
+                                        data={show}
+                                        options={options}
+                                        width={"100%"}
+                                        height={"400px"}
+                                        />
+                                    <TableContainer>
+                                        <TableHead>
+                                            {styled.options.map(option =>{
+                                                return (<TableCell>{option.option}</TableCell>)
+                                            })}
+                                        </TableHead>
+                                        
+                                        <TableBody>
+                                            <TableRow>
+                                                {styled.answerAmount.map(answer => {
+                                                    return(<TableCell>{answer.count}</TableCell>)
+                                                })}
+                                            </TableRow>
+                                        </TableBody>
+                                    </TableContainer>   
+
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        )
+                    })}
+
+                </Grid>
+
             </Box>
         )
     } else {

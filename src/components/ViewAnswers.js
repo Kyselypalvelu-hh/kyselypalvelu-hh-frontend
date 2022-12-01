@@ -32,6 +32,39 @@ function ViewAnswers() {
         return (
             <Box>
                 <StyleAnswers answers={answers} queryId={id} urlHost={url}></StyleAnswers>
+                <Typography variant="h4" sx={{textAlign: "center", marginTop: 5}}>Text answers</Typography>
+                {answers.map(question => {
+                    if (question.question.questionType === 'text') {
+                        return (
+                            <Box key={question.question.questionId} sx={{marginLeft: 4}}>
+                            <Typography>{question.question.title}</Typography>
+                            <TableContainer>
+                                <Table>
+                                    <TableHead>
+                                            <TableRow>
+                                            <TableCell sx={{ width: "25%" }}>answer id</TableCell>
+                                            <TableCell>answer</TableCell>
+                                            </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                            {question.textAnswer.map(answer => {
+                                                return (
+                                                    <TableRow key={answer.answerId}>
+                                                        <TableCell>{answer.answerId}</TableCell>
+                                                        <TableCell>{answer.answer}</TableCell>
+                                                    </TableRow>
+                                                )
+                                            })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            </Box>
+                        )
+                    }
+                    
+                })}
+
+                <Typography variant="h3" sx={{ padding: 3,marginTop: 20 }}>RAW:</Typography>
                 {answers.map(question => {
                     return (
                         <Box key={question.questionId} sx={{marginTop: 10}}>
