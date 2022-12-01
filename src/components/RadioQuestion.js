@@ -15,7 +15,7 @@ export default function RadioQuestion(props){
             name="radio-buttons-group"
           >
             {props.question.choiceOptions.map((option) => (
-            <FormControlLabel key = {option.optionId} value={option.optionId} control={<Radio />} label={option.option} />
+            <FormControlLabel key = {option.optionId} value={option.option} control={<Radio />} label={option.option} />
           ))}
           </RadioGroup>
         </FormControl>

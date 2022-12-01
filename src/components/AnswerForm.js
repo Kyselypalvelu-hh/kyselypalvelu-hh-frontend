@@ -4,12 +4,21 @@ import OpenTextQuestion from "./OpenTextQuestion";
 export default function AnswerForm(props) {
   const [answerOne, setAnswerOne] = useState("");
   const [answerTwo, setAsnwerTwo] = useState("");
-  const [answers, setAnswers] = useState("");
+  const [openTextAnswers, setOpenTextAnswers] = useState([]);
+  const [ChoiceQuestionAnswers, setChoiceQuestionAnswers] = useState([]);
+
   /*  const [answerData, setAnswerData] = useState({
     vastausYksi: "",
     vastausKaksi: "",
   }); */
   const [message, setMessage] = useState("");
+
+  const answerOpenTextQuestion = (event) => {
+    setOpenTextAnswers({...openTextAnswers, [event.target.name]: event.target.value});
+  }
+  const answerChoiceQuestion = (event) => {
+    setOpenTextAnswers({...ChoiceQuestionAnswers, [event.target.name]: event.target.value});
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,6 +88,7 @@ export default function AnswerForm(props) {
               <OpenTextQuestion
                 key={openTextQuestion.questionId}
                 questions={openTextQuestion}
+                answers = {openTextAnswers}
               />
             ))}
           </div>
@@ -88,6 +98,7 @@ export default function AnswerForm(props) {
             <RadioQuestion
               key={choiceQuestion.questionId}
               question={choiceQuestion}
+              answers = {ChoiceQuestionAnswers}
             />
           ))}
         </div>
