@@ -31,7 +31,7 @@ function ViewAnswers() {
     if (status.length === 0) {
         return (
             <Box>
-                <StyleAnswers answers={answers}></StyleAnswers>
+                <StyleAnswers answers={answers} queryId={id} urlHost={url}></StyleAnswers>
                 {answers.map(question => {
                     return (
                         <Box key={question.questionId} sx={{marginTop: 10}}>
