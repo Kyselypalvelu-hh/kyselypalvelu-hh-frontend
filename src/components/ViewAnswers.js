@@ -1,7 +1,6 @@
-import { QuestionAnswer } from "@mui/icons-material";
-import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, CircularProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { Link, Outlet, useParams } from "react-router-dom";
+import {Outlet} from "react-router-dom";
 import StyleAnswers from "./StyleAnswers";
 
 function ViewAnswers(props) {
@@ -26,7 +25,10 @@ function ViewAnswers(props) {
     }
 
     //do fetch inside{}
-    useEffect(() => { fetchAnswers() }, [])
+    useEffect(() => {
+        fetchAnswers()
+        // eslint-disable-next-line
+    }, [])
 
     if (status.length === 0) {
         return (
@@ -59,6 +61,10 @@ function ViewAnswers(props) {
                                 </Table>
                             </TableContainer>
                             </Box>
+                        )
+                    } else {
+                        return (
+                            <Box></Box>
                         )
                     }
                     
@@ -131,7 +137,8 @@ function ViewAnswers(props) {
         )
     } else {
         return (
-            <Box>
+            <Box sx={{display: 'flex',justifyContent: 'center', alignItems: 'center'}}>
+                <CircularProgress></CircularProgress>
                 <Typography>{status}</Typography>
                 <Outlet></Outlet>
             </Box>

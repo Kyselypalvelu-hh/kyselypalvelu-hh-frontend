@@ -39,10 +39,16 @@ function ViewAnswersTab() {
         return (
             <Box>
                 <AppBar position="sticky">
-                    <Tabs value={tabNumber} onChange={changeTab} sx={{ flexGrow: 1, textAling: 'center', backgroundColor: '#fff' }} textColor='primary' centered variant='fullWidth'>
+                    <Tabs variant="scrollable"
+                        scrollButtons
+                        allowScrollButtonsMobile
+                        value={tabNumber}
+                        onChange={changeTab} 
+                        sx={{ flexGrow: 1, textAling: 'center', backgroundColor: '#fff' }} 
+                        textColor='primary' centered>
                         {queries.map(query => {
                             return (
-                                <Tab label={query.title} icon={<AutoStoriesIcon color="primary"></AutoStoriesIcon>}></Tab>        
+                                <Tab sx={{width: '30%'}} label={query.title} icon={<AutoStoriesIcon color="primary"></AutoStoriesIcon>}></Tab>        
                                 )
                             })}
                     </Tabs>
