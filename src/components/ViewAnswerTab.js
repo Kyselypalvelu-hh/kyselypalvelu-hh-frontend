@@ -1,7 +1,6 @@
 import { AppBar, Box, Tab, Tabs } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import GradeIcon from '@mui/icons-material/Grade';
 import ViewAnswers from './ViewAnswers';
 
 function ViewAnswersTab() {
