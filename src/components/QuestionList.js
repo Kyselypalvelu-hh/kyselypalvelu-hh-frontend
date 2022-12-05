@@ -56,12 +56,16 @@ export const QuestionList = () => {
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Card
+        elevation = {4}
         sx={{
-          bgcolor: "teal",
+          bgcolor: "white",
           minWidth: 800,
           maxWidth: 800,
           display: "flex",
           justifyContent: "center",
+          marginTop: 3,
+          marginBottom: 3
+
         }}
       >
         <CardContent sx={{ width: "500px" }}>
