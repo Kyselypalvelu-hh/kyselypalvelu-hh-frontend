@@ -103,8 +103,7 @@ export default function AnswerForm(props) {
 </div> */}
         {/* Maps all opentextquestions from query and dispalys them as OpenTextQuestion-components */}
         <div className="openTextQuestions">
-          {props.shownQuestions.map((openTextQuestion) => (
-            
+          {props.shownQuestions.map((openTextQuestion) => (          
             <div> 
             <OpenTextQuestion
               key={openTextQuestion.questionId}
@@ -120,8 +119,12 @@ export default function AnswerForm(props) {
           {props.choiceQuestions.map((choiceQuestion) => (
             <div>
               {console.log(choiceQuestion.questionType)}
-            { choiceQuestion.checkbox
-              ? <p>CHECKBOX</p>
+            { choiceQuestion.checkbox ===true
+              ? <CheckboxQuestion
+              key={choiceQuestion.questionId}
+              question={choiceQuestion}
+              answers={ChoiceQuestionAnswers}
+              />
               : <RadioQuestion
               key={choiceQuestion.questionId}
               question={choiceQuestion}

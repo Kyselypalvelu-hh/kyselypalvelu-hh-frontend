@@ -10,15 +10,18 @@ import "../index.css";
 export default function CheckboxQuestion(props) {
   return (
     <Box sx={{ display: 'flex' }}>
-      <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
+      <FormControl component="fieldset" variant="standard">
         <FormLabel component="legend">{props.question.questionIf}</FormLabel>
         <FormGroup>
+          {props.question.choiceOptions.map((option) =>
           <FormControlLabel
-            control={
-              <Checkbox name="gilad" />
-            }
-            label="Gilad Gray"
+          control={<Checkbox name={option.option}
+          key={option.optionId}
           />
+          }
+          label={option.option}
+        />
+          )}
   </FormGroup>
       </FormControl>
       </Box>
