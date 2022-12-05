@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Link, Outlet, useParams } from "react-router-dom";
 import StyleAnswers from "./StyleAnswers";
 
-function ViewAnswers() {
-    let { id } = useParams()
+function ViewAnswers(props) {
+    let id = props.id
     const [status, setStatus] = useState('Fetching')
     const [answers, setAnswers] = useState([])
 
