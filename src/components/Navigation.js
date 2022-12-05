@@ -74,7 +74,7 @@ function Navigation(props) {
               <Button
                 sx={{ color: "#fff" }}
                 component={Link}
-                to="viewanswers/1"
+                to="viewanswers"
               >
                 {navItems[1]}
               </Button>

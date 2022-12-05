@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ViewAnswers from "./components/ViewAnswers";
 import Navigation from "./components/Navigation";
 import { Typography } from "@mui/material";
+import ViewAnswersTab from "./components/ViewAnswerTab";
 
 function App() {
   return (
@@ -16,8 +17,8 @@ function App() {
               element={<QuestionList></QuestionList>}
             ></Route>
             <Route
-              path="/viewanswers/:id"
-              element={<ViewAnswers></ViewAnswers>}
+              path="/viewanswers"
+              element={<ViewAnswersTab></ViewAnswersTab>}
             ></Route>
             <Route
               path="*"
