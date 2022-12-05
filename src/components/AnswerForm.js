@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import RadioQuestion from "./RadioQuestion";
 import OpenTextQuestion from "./OpenTextQuestion";
+import CheckboxQuestion from "./CheckboxQuestion";
 export default function AnswerForm(props) {
   const [answerOne, setAnswerOne] = useState("");
   const [answerTwo, setAnswerTwo] = useState("");
@@ -68,7 +69,16 @@ export default function AnswerForm(props) {
       console.log(err);
     }
   };
-
+  //check the question type for rendering choicequestions
+/* function choiceQuestionRender(question) {
+  const type = question.type
+  if(type == "radio"){
+    return <RadioQuestion></RadioQuestion>
+  }
+  else{
+    return <MultipleQuestion></MultipleQuestion>
+  }
+} */
   return (
     <form onSubmit={handleSubmit}>
       
@@ -108,11 +118,24 @@ export default function AnswerForm(props) {
           {/* Maps all the radioquestions from query and lists them as RadioQuestions-components */}
         <div className="choiceQuestions">
           {props.choiceQuestions.map((choiceQuestion) => (
-            <RadioQuestion
+            <div>
+              {console.log(choiceQuestion.questionType)}
+            { choiceQuestion.checkbox
+              ? <p>CHECKBOX</p>
+              : <RadioQuestion
               key={choiceQuestion.questionId}
               question={choiceQuestion}
               answers={ChoiceQuestionAnswers}
-            />
+             /> }
+
+              {/* <RadioQuestion
+              key={choiceQuestion.questionId}
+              question={choiceQuestion}
+              answers={ChoiceQuestionAnswers}
+            /> */}
+          
+          </div>
+          
           ))}
         </div>
         {/*<label>{props.shownQuestions[2].question}</label>
