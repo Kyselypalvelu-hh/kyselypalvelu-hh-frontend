@@ -33,7 +33,7 @@ function Test() {
     }
     
     const fetchUrl = async () => {
-        const connection = await fetch('http://localhost:8080/queries/6')
+        const connection = await fetch('http://localhost:8080/queries/1')
         const json = await connection.json()
         setQuery(json)
         createAnswers(json)
