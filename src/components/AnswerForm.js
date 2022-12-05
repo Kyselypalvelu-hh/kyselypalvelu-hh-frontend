@@ -3,7 +3,7 @@ import RadioQuestion from "./RadioQuestion";
 import OpenTextQuestion from "./OpenTextQuestion";
 export default function AnswerForm(props) {
   const [answerOne, setAnswerOne] = useState("");
-  const [answerTwo, setAsnwerTwo] = useState("");
+  const [answerTwo, setAnswerTwo] = useState("");
   const [openTextAnswers, setOpenTextAnswers] = useState([]);
   const [ChoiceQuestionAnswers, setChoiceQuestionAnswers] = useState([]);
 
@@ -12,7 +12,7 @@ export default function AnswerForm(props) {
     vastausKaksi: "",
   }); */
   const [message, setMessage] = useState("");
-
+  
   const answerOpenTextQuestion = (event) => {
     setOpenTextAnswers({
       ...openTextAnswers,
@@ -25,7 +25,6 @@ export default function AnswerForm(props) {
       [event.target.name]: event.target.value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(props.shownQuestions);
@@ -56,7 +55,7 @@ export default function AnswerForm(props) {
       let resJson = await res.json();
       if (res.status === 200) {
         setAnswerOne("");
-        setAsnwerTwo("");
+        setAnswerTwo("");
         setMessage("Answers posted successfully");
       } else {
         setMessage("Some error occured");
@@ -68,7 +67,9 @@ export default function AnswerForm(props) {
 
   return (
     <form onSubmit={handleSubmit}>
+      
       <div className="form-group" key={props.shownQuestions.title}>
+      {/* Hard coded test question for opentextanswers */}
         {/*         <div className="openTextQuestion">
           {props.shownQuestions.map((openQuestion) => (
             <div key={openQuestion.questionId}>
@@ -86,16 +87,21 @@ export default function AnswerForm(props) {
             </div>
           ))}
 </div> */}
+        {/* Maps all opentextquestions from query and dispalys them as OpenTextQuestion-components */}
         <div className="openTextQuestions">
           {props.shownQuestions.map((openTextQuestion) => (
+            
+            <div> 
             <OpenTextQuestion
               key={openTextQuestion.questionId}
               questions={openTextQuestion}
               answers={openTextAnswers}
+              setAnswer={setOpenTextAnswers}
             />
+            </div>
           ))}
         </div>
-
+          {/* Maps all the radioquestions from query and lists them as RadioQuestions-components */}
         <div className="choiceQuestions">
           {props.choiceQuestions.map((choiceQuestion) => (
             <RadioQuestion
@@ -116,12 +122,6 @@ export default function AnswerForm(props) {
             console.log(answerOne);
           }}
         />  */}
-
-        {/*       {props.ChoiceQuestions.map((choiceQuestion) => 
-    <div key = {choiceQuestion.questionId}> 
-    <p>{choiceQuestion.id}</p>
-    </div>
-    )} */}
       </div>
       <button
         type="submit"
