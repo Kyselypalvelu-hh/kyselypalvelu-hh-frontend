@@ -7,6 +7,10 @@ export default function AnswerForm(props) {
   const [openTextAnswers, setOpenTextAnswers] = useState([]);
   const [ChoiceQuestionAnswers, setChoiceQuestionAnswers] = useState([]);
 
+  const local = "http://localhost:8080/";
+  const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
+  const url = server;
+
   /*  const [answerData, setAnswerData] = useState({
     vastausYksi: "",
     vastausKaksi: "",
@@ -30,7 +34,7 @@ export default function AnswerForm(props) {
     console.log(props.shownQuestions);
     console.log(props.choiceQuestions);
     try {
-      let res = await fetch("http://localhost:8080/answers", {
+      let res = await fetch(server + "answers", {
         method: "POST",
         headers: {
           Accept: "application/json",
