@@ -18,7 +18,7 @@ export const QuestionList = () => {
   const [choiceQuestions, setChoiceQuestions] = useState([]);
   const local = "http://localhost:8080/";
   const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
-  const url = server;
+  const url = local;
 
   //FETCH ALL QUESTIONS
   //CHANGE URL WHEN DEPLOYED TO HEROKU

@@ -9,7 +9,7 @@ export default function AnswerForm(props) {
 
   const local = "http://localhost:8080/";
   const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
-  const url = server;
+  const url = local;
 
   /*  const [answerData, setAnswerData] = useState({
     vastausYksi: "",
@@ -34,7 +34,7 @@ export default function AnswerForm(props) {
     console.log(props.shownQuestions);
     console.log(props.choiceQuestions);
     try {
-      let res = await fetch(server + "answers", {
+      let res = await fetch(url + "answers", {
         method: "POST",
         headers: {
           Accept: "application/json",

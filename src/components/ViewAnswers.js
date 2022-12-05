@@ -11,7 +11,7 @@ function ViewAnswers() {
 
     const local = 'http://localhost:8080/'
     const server = "https://swd022-kyselypalvelu-back.herokuapp.com/"
-    const url = server
+    const url = local
 
     const fetchAnswers = async () => {
         try {
