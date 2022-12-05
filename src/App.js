@@ -5,6 +5,7 @@ import ViewAnswers from "./components/ViewAnswers";
 import Navigation from "./components/Navigation";
 import { Typography } from "@mui/material";
 import ViewAnswersTab from "./components/ViewAnswerTab";
+import Test from "./components/Test";
 
 function App() {
   return (
@@ -19,6 +20,10 @@ function App() {
             <Route
               path="/viewanswers"
               element={<ViewAnswersTab></ViewAnswersTab>}
+            ></Route>
+            <Route
+              path="/test"
+              element={<Test></Test>}
             ></Route>
             <Route
               path="*"
