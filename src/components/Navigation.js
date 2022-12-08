@@ -15,11 +15,12 @@ import Button from "@mui/material/Button";
 import { Link, Outlet } from "react-router-dom";
 
 const drawerWidth = 240;
-const navItems = ["Answer query", "Answer statistics", "Contact"];
+const navItems = ["Answer query", "Answer statistics", "Rest Guide"];
 
 function Navigation(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [tabNumber, setTabNumber] = useState(0);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -71,17 +72,15 @@ function Navigation(props) {
               <Button sx={{ color: "#fff" }} component={Link} to="questionlist">
                 {navItems[0]}
               </Button>
-              <Button
-                sx={{ color: "#fff" }}
-                component={Link}
-                to="viewanswers"
-              >
+              <Button sx={{ color: "#fff" }} component={Link} to="viewanswers">
                 {navItems[1]}
+              </Button>
+              <Button sx={{ color: "#fff" }} component={Link} to="restpage">
+                {navItems[2]}
               </Button>
             </Box>
           </Toolbar>
         </AppBar>
-        <Toolbar />
         <Box component="nav">
           <Drawer
             container={container}
