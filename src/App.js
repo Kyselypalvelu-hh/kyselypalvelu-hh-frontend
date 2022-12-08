@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation";
 import { Typography } from "@mui/material";
 import ViewAnswersTab from "./components/ViewAnswerTab";
 import Test from "./components/Test";
+import { RestHomePage } from "./components/RestHomePage";
 
 function App() {
   return (
@@ -22,9 +23,10 @@ function App() {
               element={<ViewAnswersTab></ViewAnswersTab>}
             ></Route>
             <Route
-              path="/test"
-              element={<Test></Test>}
+              path="/restpage"
+              element={<RestHomePage></RestHomePage>}
             ></Route>
+            <Route path="/test" element={<Test></Test>}></Route>
             <Route
               path="*"
               element={<Typography>Routing error</Typography>}
