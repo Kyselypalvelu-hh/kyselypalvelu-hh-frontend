@@ -5,16 +5,17 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import axios from 'axios';
 
 function Test() {
-    const [query, setQuery] = useState({})
-    const [status, setStatus] = useState('waiting')
+    const [query, setQuery] = useState({}) //fetched from db
+    const [status, setStatus] = useState('waiting') //status of fetch
     const [answers, setAnswers] = useState({})
-    const [text, setText] = useState([])
-    const [choice, setChoice] = useState([])
+    const [text, setText] = useState([]) //array of text annswers
+    const [choice, setChoice] = useState([]) //array of choiceQuestions with answer array included
 
     useEffect(() => {
         fetchUrl()
     }, [])
     
+    //format query options and questions into useStates text+choice
     const createAnswers = (e) => {
         const txt = []
         const choices = []
@@ -24,8 +25,8 @@ function Test() {
                 answer: ''
             })
         })
-
         setText(txt)
+
         e.choiceQuestions.forEach(question => {
             choices.push({
                 id: question.questionId,
@@ -37,6 +38,7 @@ function Test() {
         setChoice(choices)
     }
     
+    //fetch query from db
     const fetchUrl = async () => {
         const connection = await fetch('http://localhost:8080/queries/1')
         const json = await connection.json()
@@ -45,6 +47,7 @@ function Test() {
         setStatus('')
     }
 
+    //post already formatted body(json) to DB
     const postForm = async (body) => {
         try {
             const connection = await axios.post("http://localhost:8080/answers", body)
@@ -55,11 +58,13 @@ function Test() {
         }
     }
 
+    //unused
     const getChoicesJson = () => {
         const list = []
         return list
     }
 
+    //format all answers into correct json format for DB
     const submitForm = () => {
         const textAnswer = []
         text.forEach(a => {
@@ -90,10 +95,11 @@ function Test() {
             choiceAnswer: choiceOptions
         }
 
-        console.log(body)
+        //console.log(body)
         postForm(body)
     }
 
+    //Update text field with correct id
     const updatetext = index => e => {
         console.log(index)
         console.log(e.target.value)
@@ -104,12 +110,11 @@ function Test() {
         }
         setText(array)
 
-
-
     }
 
     console.log(text)
 
+    //Change radio to active
     const activeRadio = (e,questionId) => {
         console.log(e)
         console.log(questionId)
@@ -144,10 +149,12 @@ function Test() {
                     })}
 
                     {query.choiceQuestions.map(question => {
+                        //questions
                         return (
                             <RadioGroup>
                                 <label>{question.questionIf}</label>
                                 {question.choiceOptions.map(option => {
+                                    //options
                                     return (
                                         <FormControlLabel
                                             key={option.optionId}
