@@ -1,10 +1,9 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import web from "../images/classdiagramWeb.JPG";
 
 export const RestHomePage = () => {
-  /* const [] */
-
   return (
     <Box sx={{ margin: "25px 0px 0px 25px" }}>
       <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -33,6 +32,12 @@ export const RestHomePage = () => {
         >
           http://localhost:8080/queries/(queryID)/opentextquestions
         </Button>
+        <Box position="relative">
+          <img src={web} alt="web"></img>
+          <img src="" alt=""></img>
+          <img src="" alt=""></img>
+          <img src="" alt=""></img>
+        </Box>
       </Box>
     </Box>
   );
