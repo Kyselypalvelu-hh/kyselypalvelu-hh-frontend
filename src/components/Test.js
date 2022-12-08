@@ -124,7 +124,6 @@ function Test() {
                 }
             } 
         })
-
         console.log(choice)
     }
 
