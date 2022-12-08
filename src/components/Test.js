@@ -35,7 +35,6 @@ function Test() {
             })
         })
         setChoice(choices)
-
     }
     
     const fetchUrl = async () => {
