@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import axios from 'axios';
 
 function Test() {
     const [query, setQuery] = useState({})
@@ -20,16 +24,17 @@ function Test() {
                 answer: ''
             })
         })
+
         setText(txt)
         e.choiceQuestions.forEach(question => {
             choices.push({
                 id: question.questionId,
                 options: question.choiceOptions,
+                checkbox: question.checkbox,
                 answers: []
             })
         })
         setChoice(choices)
-
     }
     
     const fetchUrl = async () => {
@@ -40,8 +45,53 @@ function Test() {
         setStatus('')
     }
 
+    const postForm = async (body) => {
+        try {
+            const connection = await axios.post("http://localhost:8080/answers", body)
+            const ok = await connection.json()
+            console.log(ok)
+        } catch (error) {
+            
+        }
+    }
+
+    const getChoicesJson = () => {
+        const list = []
+        return list
+    }
+
     const submitForm = () => {
+        const textAnswer = []
+        text.forEach(a => {
+            textAnswer.push({
+                answer: a.answer,
+                question: { questionId: a.id }
+            })
+        })
+        const choiceOptions = []//{question, optionId}
+
+        choice.forEach(choi => {
+            const qList = []
+            choi.answers.forEach(ans => {
+                qList.push({
+                    optionId: ans,
+                    question: {questionId: choi.id}
+                })
+            })
+            choiceOptions.push({
+                question: {questionId: choi.id},
+                options: qList  
+            })
+        })
         
+        
+        const body = {
+            textAnswer: textAnswer,
+            choiceAnswer: choiceOptions
+        }
+
+        console.log(body)
+        postForm(body)
     }
 
     const updatetext = index => e => {
@@ -60,11 +110,28 @@ function Test() {
 
     console.log(text)
 
+    const activeRadio = (e,questionId) => {
+        console.log(e)
+        console.log(questionId)
+        choice.forEach(cho => {
+            if (cho.id === questionId) {
+                if (e in cho.answers) {
+                    cho.answer.remove(e)
+                } else if(cho.checkbox){
+                    cho.answers.push(e)
+                } else {
+                    cho.answers = [e]
+                }
+            } 
+        })
+        console.log(choice)
+    }
+
     let textIndex = -1
 
     if (status.length === 0) {
         return (
-            <div>
+            <div style={{padding: 5}}>
             <form>
                 <p>{query.title}</p>
                     {query.textQuestions.map(question => {
@@ -74,10 +141,29 @@ function Test() {
                             <label>{question.questionIf}</label><input value={text[textIndex].answer} onChange={updatetext(textIndex)}></input>
                         </div>
                     )
-                })}
+                    })}
+
+                    {query.choiceQuestions.map(question => {
+                        return (
+                            <RadioGroup>
+                                <label>{question.questionIf}</label>
+                                {question.choiceOptions.map(option => {
+                                    return (
+                                        <FormControlLabel
+                                            key={option.optionId}
+                                            value={option.optionId}
+                                            control={<Radio />}
+                                            label={option.option}
+                                            onClick={() => activeRadio(option.optionId, question.questionId)}
+                                        />
+                                )})}
+                            </RadioGroup>
+                    )
+                    })}
                     
-                <button onClick={() => submitForm()}>submit</button>
+                
                 </form>
+                <button onClick={() => submitForm()}>submit</button>
             </div>
         )
     } else {
