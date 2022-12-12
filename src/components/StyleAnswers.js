@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardHeader, Grid, Paper, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Grid, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Chart } from "react-google-charts";
 
@@ -199,29 +199,31 @@ function StyleAnswers(props) {
                                 <Card>
                                     <CardHeader title={styled.question}></CardHeader>
                                     <CardContent>
-                                    <Chart
-                                        chartType="PieChart"
-                                        data={show}
-                                        options={options}
-                                        width={"100%"}
-                                        height={"400px"}
+                                        <Chart
+                                            chartType="PieChart"
+                                            data={show}
+                                            options={options}
+                                            width={"100%"}
+                                            height={"400px"}
                                         />
-                                    <TableContainer>
-                                        <TableHead>
-                                            {styled.options.map(option =>{
-                                                return (<TableCell key={option.optionId}>{option.option}</TableCell>)
-                                            })}
-                                        </TableHead>
+                                        <TableContainer>
+                                            <Table>
+                                                <TableHead>
+                                                    {styled.options.map(option =>{
+                                                        return (<TableCell key={option.optionId}>{option.option}</TableCell>)
+                                                    })}
+                                                </TableHead>
                                         
-                                        <TableBody>
-                                            <TableRow>
-                                                {styled.answerAmount.map(answer => {
-                                                    answerAmountInd++
-                                                    return(<TableCell key={answerAmountInd}>{answer.count}</TableCell>)
-                                                })}
-                                            </TableRow>
-                                        </TableBody>
-                                    </TableContainer>   
+                                                <TableBody>
+                                                    <TableRow>
+                                                        {styled.answerAmount.map(answer => {
+                                                            answerAmountInd++
+                                                            return(<TableCell key={answerAmountInd}>{answer.count}</TableCell>)
+                                                        })}
+                                                    </TableRow>
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>   
 
                                     </CardContent>
                                 </Card>
