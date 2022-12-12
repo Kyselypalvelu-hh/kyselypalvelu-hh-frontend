@@ -1,18 +1,16 @@
 import React, { useState,useEffect } from "react";
-import RadioQuestion from "./RadioQuestion";
-import OpenTextQuestion from "./OpenTextQuestion";
-import CheckboxQuestion from "./CheckboxQuestion";
 import axios from 'axios'
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Box, Checkbox } from '@mui/material';
+import { Box, Checkbox, Snackbar } from '@mui/material';
 
 export default function AnswerForm(props) {
-  const [answerOne, setAnswerOne] = useState("");
-  const [answerTwo, setAnswerTwo] = useState("");
-  const [openTextAnswers, setOpenTextAnswers] = useState([]);
-  const [ChoiceQuestionAnswers, setChoiceQuestionAnswers] = useState([]);
+
+  const [openSnackbar, setOpenSnackbar] = useState(false)
+  const handleClose = () => {
+    setOpenSnackbar(false)
+  }
 
   const local = "http://localhost:8080/";
   const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
@@ -27,13 +25,12 @@ export default function AnswerForm(props) {
   //FROM TEST:JS--------------------
   const [query, setQuery] = useState({}) //fetched from db
   const [status, setStatus] = useState('waiting') //status of fetch
-  const [answers, setAnswers] = useState({})
   const [text, setText] = useState([]) //array of text annswers
   const [choice, setChoice] = useState([]) //array of choiceQuestions with answer array included
 
   useEffect(() => {
     fetchUrl()
-  }, [])
+  }, [props.queryId])
     
   //format query options and questions into useStates text+choice
   const createAnswers = (e) => {
@@ -69,12 +66,14 @@ export default function AnswerForm(props) {
 
   //post already formatted body(json) to DB
   const postForm = async (body) => {
+    console.log("posting")
     try {
       const connection = await axios.post("http://localhost:8080/answers", body)
-      const ok = await connection.json()
-      console.log(ok)
+      if (connection.status === 200) {
+        setOpenSnackbar(true)
+      }
     } catch (error) {
-            
+        console.log(error)
     }
   }
 
@@ -121,8 +120,7 @@ export default function AnswerForm(props) {
 
   //Update text field with correct id
   const updatetext = index => e => {
-    console.log(index)
-    console.log(e.target.value)
+
     let array = [...text]
     array[index] = {
       id: array[index].id,
@@ -132,11 +130,9 @@ export default function AnswerForm(props) {
 
   }
 
-  console.log(text)
 
   //Change radio to active
   const activeRadio = (e, questionId) => {
-    console.log(e)
     choice.forEach(cho => {
       if (cho.id === questionId) {
         if (cho.answers.includes(e)) {
@@ -150,8 +146,6 @@ export default function AnswerForm(props) {
         }
       }
     })
-
-    console.log(choice)
   }
 
   let textIndex = -1
@@ -241,6 +235,13 @@ export default function AnswerForm(props) {
             
         </form>
         <button onClick={() => submitForm()}>submit</button>
+        <p>{message}</p>
+        <Snackbar open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleClose}
+        message="Answer saved!"
+        >
+        </Snackbar>
       </div>
     )
   } else {
