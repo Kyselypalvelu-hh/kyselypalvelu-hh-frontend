@@ -16,7 +16,8 @@ export const QuestionList = () => {
   const [onError, setOnError] = useState("Loading...");
   const [shownQuestions, setShownQuestions] = useState([]);
   const [choiceQuestions, setChoiceQuestions] = useState([]);
-  const [queryId,setQueryId] = useState(0)
+  const [queryId, setQueryId] = useState(0)
+  const [viewQuestions, setViewQuestions] = useState(false)
 
   const local = "http://localhost:8080/";
   const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
@@ -24,23 +25,24 @@ export const QuestionList = () => {
 
   //FETCH ALL QUESTIONS
   //CHANGE URL WHEN DEPLOYED TO HEROKU
+
   useEffect(() => {
+    setShownQuestions([])
     fetch(url + "questions")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setQuestions(data);
         setOnError("");
       })
       .catch((err) => setOnError("Failed to fetch data"));
   }, []);
+
   //FETCH ALL QUERIES
   //CHANGE URL WHEN DEPLOYED
   useEffect(() => {
     fetch(url + "queries")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setQueries(data);
         setOnError("");
       })
@@ -53,6 +55,12 @@ export const QuestionList = () => {
   }
   if (questions === 0) {
     return <div>{onError}</div>;
+  }
+
+  const changeQueryId = (e) => {
+    setViewQuestions(false)
+    setQueryId(e)
+    setViewQuestions(true)
   }
 
   return (
@@ -80,24 +88,7 @@ export const QuestionList = () => {
                 key={query.id}
                 sx={{ margin: "4px" }}
                 variant="contained"
-                onClick={(e) => {
-                  let shownQ = [];
-                  let shownChoiceQ = [];
-                  //LOOP THROUGH ALL QUESTIONS OF PRESSED BUTTON (QUERY)
-                  //AND ADD THEM TO TEMPORARY ARRAY(shownQ)
-                  for (let openQuestion of query.textQuestions) {
-                    shownQ.push(openQuestion);
-                  }
-                  for (let choiceQuestion of query.choiceQuestions) {
-                    shownChoiceQ.push(choiceQuestion);
-                  }
-
-                  //SETS STATE SO WE CAN GET THIS DATA OUTSIDE OF THIS BUTTON
-                  //DATA NEEDED IN THE LIST BELOW
-                  setShownQuestions(shownQ);
-                  setChoiceQuestions(shownChoiceQ);
-                  setQueryId(query.id)
-                }}
+                onClick={(e) => changeQueryId(query.id)}
               >
                 {query.title}
               </Button>
@@ -106,10 +97,8 @@ export const QuestionList = () => {
 
           {/* IF shownQuestion STATE IS NOT EMPTY, 
               WE RENDER A LIST WITH ITS QUESTIONS*/}
-          {shownQuestions.length !== 0 && (
+          {viewQuestions && (
             <AnswerForm
-              shownQuestions={shownQuestions}
-              choiceQuestions={choiceQuestions}
               queryId={queryId}
             />
           )}
