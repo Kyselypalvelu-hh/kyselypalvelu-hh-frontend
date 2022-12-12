@@ -50,7 +50,7 @@ function Navigation(props) {
   return (
     <Box>
       <Box sx={{ display: "flex" }}>
-        <AppBar component="nav" position="fixed">
+        <AppBar component="nav" position="static">
           <Toolbar>
             <IconButton
               color="inherit"

@@ -7,6 +7,7 @@ import { Typography } from "@mui/material";
 import ViewAnswersTab from "./components/ViewAnswerTab";
 import Test from "./components/Test";
 import { RestHomePage } from "./components/RestHomePage";
+import ScrollButton from "./components/ScrollButton";
 
 function App() {
   return (
@@ -34,7 +35,9 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <ScrollButton />
     </Box>
+    
   );
 }
 
