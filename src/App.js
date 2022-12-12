@@ -23,7 +23,7 @@ function App() {
               element={<ViewAnswersTab></ViewAnswersTab>}
             ></Route>
             <Route
-              path="/restpage"
+              path="/appguide"
               element={<RestHomePage></RestHomePage>}
             ></Route>
             <Route path="/test" element={<Test></Test>}></Route>
