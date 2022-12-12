@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-  
+  // yo
 export const Heading = styled.h1`
    text-align: center;
    color: green;
 `;
   
-export const Content = styled.div`
+export const Content = styled.div` 
    overflowY: scroll;
    height: 2500px;
 `;
