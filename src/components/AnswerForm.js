@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import RadioQuestion from "./RadioQuestion";
 import OpenTextQuestion from "./OpenTextQuestion";
 import CheckboxQuestion from "./CheckboxQuestion";
+import axios from 'axios'
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import { Box, Checkbox } from '@mui/material';
+
 export default function AnswerForm(props) {
   const [answerOne, setAnswerOne] = useState("");
   const [answerTwo, setAnswerTwo] = useState("");
@@ -18,149 +24,228 @@ export default function AnswerForm(props) {
   }); */
   const [message, setMessage] = useState("");
   
-  const answerOpenTextQuestion = (event) => {
-    setOpenTextAnswers({
-      ...openTextAnswers,
-      [event.target.name]: event.target.value,
-    });
-  };
-  const answerChoiceQuestion = (event) => {
-    setOpenTextAnswers({
-      ...ChoiceQuestionAnswers,
-      [event.target.name]: event.target.value,
-    });
-  };
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log(props.shownQuestions);
-    console.log(props.choiceQuestions);
-    try {
-      let res = await fetch(url + "answers", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          textAnswer: [
-            {
-              answer: answerOne,
-              /* question: props.shownQuestions[0].title, */
-              question: { questionId: props.shownQuestions[0].questionId },
-            },
-            {
-              answer: answerTwo,
-              /* question: props.shownQuestions[1].title, */
-              question: { questionId: props.shownQuestions[1].questionId },
-            },
-          ],
-          choiceAnswer: [],
-        }),
-      });
-      let resJson = await res.json();
-      if (res.status === 200) {
-        setAnswerOne("");
-        setAnswerTwo("");
-        setMessage("Answers posted successfully");
-      } else {
-        setMessage("Some error occured");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  //check the question type for rendering choicequestions
-/* function choiceQuestionRender(question) {
-  const type = question.type
-  if(type == "radio"){
-    return <RadioQuestion></RadioQuestion>
-  }
-  else{
-    return <MultipleQuestion></MultipleQuestion>
-  }
-} */
-  return (
-    <form onSubmit={handleSubmit}>
-      
-      <div className="form-group" key={props.shownQuestions.title}>
-      {/* Hard coded test question for opentextanswers */}
-        {/*         <div className="openTextQuestion">
-          {props.shownQuestions.map((openQuestion) => (
-            <div key={openQuestion.questionId}>
-              <label>{openQuestion.title}</label>
-              <textarea
-                style={{ height: "100px" }}
-                type="text"
-                value={answerTwo}
-                className="form-control"
-                onChange={(e) => {
-                  setAsnwerTwo(e.target.value);d
-                  console.log(answerTwo);
-                }}
-              />
-            </div>
-          ))}
-</div> */}
-        {/* Maps all opentextquestions from query and dispalys them as OpenTextQuestion-components */}
-        <div className="openTextQuestions">
-          {props.shownQuestions.map((openTextQuestion) => (          
-            <div> 
-            <OpenTextQuestion
-              key={openTextQuestion.questionId}
-              questions={openTextQuestion}
-              answers={openTextAnswers}
-              setAnswer={setOpenTextAnswers}
-            />
-            </div>
-          ))}
-        </div>
-          {/* Maps all the radioquestions from query and lists them as RadioQuestions-components */}
-        <div className="choiceQuestions">
-          {props.choiceQuestions.map((choiceQuestion) => (
-            <div>
-              {console.log(choiceQuestion.questionType)}
-            { choiceQuestion.checkbox ===true
-              ? <CheckboxQuestion
-              key={choiceQuestion.questionId}
-              question={choiceQuestion}
-              answers={ChoiceQuestionAnswers}
-              />
-              : <RadioQuestion
-              key={choiceQuestion.questionId}
-              question={choiceQuestion}
-              answers={ChoiceQuestionAnswers}
-             /> }
+  //FROM TEST:JS--------------------
+  const [query, setQuery] = useState({}) //fetched from db
+  const [status, setStatus] = useState('waiting') //status of fetch
+  const [answers, setAnswers] = useState({})
+  const [text, setText] = useState([]) //array of text annswers
+  const [choice, setChoice] = useState([]) //array of choiceQuestions with answer array included
 
-              {/* <RadioQuestion
-              key={choiceQuestion.questionId}
-              question={choiceQuestion}
-              answers={ChoiceQuestionAnswers}
-            /> */}
-          
-          </div>
-          
-          ))}
-        </div>
-        {/*<label>{props.shownQuestions[2].question}</label>
-         <textarea
-          style={{ height: "100px" }}
-          type="text"
-          value={answerOne}
-          className="form-control"
-          onChange={(e) => {
-            setAnswerOne(e.target.value);
-            console.log(answerOne);
-          }}
-        />  */}
+  useEffect(() => {
+    fetchUrl()
+  }, [])
+    
+  //format query options and questions into useStates text+choice
+  const createAnswers = (e) => {
+    const txt = []
+    const choices = []
+    e.textQuestions.forEach(question => {
+      txt.push({
+        id: question.questionId,
+        answer: ''
+      })
+    })
+    setText(txt)
+
+    e.choiceQuestions.forEach(question => {
+      choices.push({
+        id: question.questionId,
+        options: question.choiceOptions,
+        checkbox: question.checkbox,
+        answers: []
+      })
+    })
+    setChoice(choices)
+  }
+    
+  //fetch query from db
+  const fetchUrl = async () => {
+    const connection = await fetch('http://localhost:8080/queries/' + props.queryId)
+    const json = await connection.json()
+    setQuery(json)
+    createAnswers(json)
+    setStatus('')
+  }
+
+  //post already formatted body(json) to DB
+  const postForm = async (body) => {
+    try {
+      const connection = await axios.post("http://localhost:8080/answers", body)
+      const ok = await connection.json()
+      console.log(ok)
+    } catch (error) {
+            
+    }
+  }
+
+  //unused
+  const getChoicesJson = () => {
+    const list = []
+    return list
+  }
+
+  //format all answers into correct json format for DB
+  const submitForm = () => {
+    const textAnswer = []
+    text.forEach(a => {
+      textAnswer.push({
+        answer: a.answer,
+        question: { questionId: a.id }
+      })
+    })
+    const choiceOptions = []//{question, optionId}
+
+    choice.forEach(choi => {
+      const qList = []
+      choi.answers.forEach(ans => {
+        qList.push({
+          optionId: ans,
+          question: { questionId: choi.id }
+        })
+      })
+      choiceOptions.push({
+        question: { questionId: choi.id },
+        options: qList
+      })
+    })
+        
+        
+    const body = {
+      textAnswer: textAnswer,
+      choiceAnswer: choiceOptions
+    }
+
+    //console.log(body)
+    postForm(body)
+  }
+
+  //Update text field with correct id
+  const updatetext = index => e => {
+    console.log(index)
+    console.log(e.target.value)
+    let array = [...text]
+    array[index] = {
+      id: array[index].id,
+      answer: e.target.value
+    }
+    setText(array)
+
+  }
+
+  console.log(text)
+
+  //Change radio to active
+  const activeRadio = (e, questionId) => {
+    console.log(e)
+    choice.forEach(cho => {
+      if (cho.id === questionId) {
+        if (cho.answers.includes(e)) {
+          console.log("in array")
+          let index = cho.answers.indexOf(e)
+          cho.answers.splice(index, 1)
+        } else if (cho.checkbox) {
+          cho.answers.push(e)
+        } else {
+          cho.answers = [e]
+        }
+      }
+    })
+
+    console.log(choice)
+  }
+
+  let textIndex = -1
+  //check the question type for rendering choicequestions
+  /* function choiceQuestionRender(question) {
+    const type = question.type
+    if(type == "radio"){
+      return <RadioQuestion></RadioQuestion>
+    }
+    else{
+      return <MultipleQuestion></MultipleQuestion>
+    }
+  } */
+  
+  const handleSubmit = () => {
+    
+  }
+  if (status.length === 0) {
+    return (
+      <div style={{ padding: 5 }}>
+        <form>
+          <p>{query.title}</p>
+          {query.textQuestions.map(question => {
+            textIndex++
+            return (
+              <div>
+                <label>{question.questionIf}</label>
+                <textarea
+                  style={{ height: "100px" }}
+                  type="text"
+                  className="form-control"
+                  value={text[textIndex].answer} onChange={updatetext(textIndex)}
+                />
+              </div>
+            )
+          })}
+
+          {query.choiceQuestions.map(question => {
+            //questions
+            return (
+              <Box>
+                {question.checkbox
+                  ? <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="female"
+                    name="radio-buttons-group">
+                    <label>{question.questionIf}</label>
+                    {question.choiceOptions.map(option => {
+                      //options
+                      return (
+                        <FormControlLabel
+                          key={option.optionId}
+                          value={option.optionId}
+                          control={<Checkbox></Checkbox>}
+                          label={option.option}
+                          onClick={() => activeRadio(option.optionId, question.questionId)}
+                        />
+                      )
+                    })}
+                  </RadioGroup>
+                            
+                  : <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="female"
+                    name="radio-buttons-group">
+                    <label>{question.questionIf}</label>
+                    {question.choiceOptions.map(option => {
+                      //options
+                      return (
+                        <FormControlLabel
+                          key={option.optionId}
+                          value={option.optionId}
+                          control={<Radio />}
+                          label={option.option}
+                          onClick={() => activeRadio(option.optionId, question.questionId)}
+                        />
+                      )
+                    })}
+                  </RadioGroup>
+                        
+                }
+              </Box>
+                        
+            )
+          })}
+                
+            
+        </form>
+        <button onClick={() => submitForm()}>submit</button>
       </div>
-      <button
-        type="submit"
-        className="btn btn-primary"
-        onClick={console.log(props.shownQuestions)}
-      >
-        Submit
-      </button>
-      <div>{message ? <p>{message}</p> : null}</div>
-    </form>
-  );
+    )
+  } else {
+    return (
+      <p>{ status }</p>
+    );
+  }
 }
