@@ -6,7 +6,7 @@ import ViewAnswers from './ViewAnswers';
 function ViewAnswersTab() {
     const local = "http://localhost:8080/";
     const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
-    const url = local;
+    const url = server;
 
     let tabIndex = -1
 

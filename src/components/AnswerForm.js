@@ -13,8 +13,8 @@ export default function AnswerForm(props) {
   }
 
   const local = "http://localhost:8080/";
-  //const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
-  const host = local;
+  const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
+  const host = server;
   
   //FROM TEST:JS--------------------
   const [query, setQuery] = useState({}) //fetched from db

@@ -9,8 +9,8 @@ function ViewAnswers(props) {
     const [answers, setAnswers] = useState([])
 
     const local = 'http://localhost:8080/'
-    //const server = "https://swd022-kyselypalvelu-back.herokuapp.com/"
-    const url = local
+    const server = "https://swd022-kyselypalvelu-back.herokuapp.com/"
+    const url = server
 
     const fetchAnswers = async () => {
         try {
