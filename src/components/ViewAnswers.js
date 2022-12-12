@@ -29,16 +29,18 @@ function ViewAnswers(props) {
         fetchAnswers()
         // eslint-disable-next-line
     }, [])
-
+    let indexQuestion = 0
+    let answerQId = 0
     if (status.length === 0) {
         return (
             <Box>
                 <StyleAnswers answers={answers} queryId={id} urlHost={url}></StyleAnswers>
                 <Typography variant="h4" sx={{textAlign: "center", marginTop: 5}}>Text answers</Typography>
                 {answers.map(question => {
+                    indexQuestion ++
                     if (question.question.questionType === 'text') {
                         return (
-                            <Box key={question.question.questionId} sx={{marginLeft: 4}}>
+                            <Box key={indexQuestion} sx={{marginLeft: 4}}>
                             <Typography>{question.question.title}</Typography>
                             <TableContainer>
                                 <Table>
@@ -64,7 +66,7 @@ function ViewAnswers(props) {
                         )
                     } else {
                         return (
-                            <Box key={question.questionId}></Box>
+                            <Box key={indexQuestion}></Box>
                         )
                     }
                     
@@ -72,8 +74,9 @@ function ViewAnswers(props) {
 
                 <Typography variant="h3" sx={{ padding: 3,marginTop: 20 }}>RAW:</Typography>
                 {answers.map(question => {
+                    answerQId ++
                     return (
-                        <Box key={question.questionId} sx={{marginTop: 10}}>
+                        <Box key={answerQId} sx={{marginTop: 10}}>
 
                             <TableContainer>
                                 <Table>

@@ -206,12 +206,15 @@ function StyleAnswers(props) {
                                             width={"100%"}
                                             height={"400px"}
                                         />
+                                        <Box>
                                         <TableContainer>
                                             <Table>
                                                 <TableHead>
+                                                    <TableRow>
                                                     {styled.options.map(option =>{
                                                         return (<TableCell key={option.optionId}>{option.option}</TableCell>)
                                                     })}
+                                                    </TableRow>
                                                 </TableHead>
                                         
                                                 <TableBody>
@@ -224,7 +227,7 @@ function StyleAnswers(props) {
                                                 </TableBody>
                                             </Table>
                                         </TableContainer>   
-
+                                        </Box>  
                                     </CardContent>
                                 </Card>
                             </Grid>
