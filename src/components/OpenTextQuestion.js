@@ -1,6 +1,6 @@
 
 export default function OpenTextQuestion(props){
-  console.log(props.OpenTextQuestion)
+  /*console.log(props.OpenTextQuestion)
     return (
         <div>
         <label>{props.questions.questionIf}</label>
@@ -8,16 +8,9 @@ export default function OpenTextQuestion(props){
             style={{ height: "100px" }}
             type="text"
             className="form-control"
-            value={props.openTextAnswers}
-            onChange={(e) => {
-              props.setAnswer({
-                ...props.openTextAnswers,
-                [props.questionId] : e.target.value
-              })
-            }
-            }
-
+            value={text[textIndex].answer} onChange={updatetext(textIndex)}
           />
           </div>
       );
+      */
     }

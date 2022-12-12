@@ -3,6 +3,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import axios from 'axios';
+import { Box, Checkbox } from '@mui/material';
 
 function Test() {
     const [query, setQuery] = useState({}) //fetched from db
@@ -40,7 +41,7 @@ function Test() {
     
     //fetch query from db
     const fetchUrl = async () => {
-        const connection = await fetch('http://localhost:8080/queries/1')
+        const connection = await fetch('http://localhost:8080/queries/3')
         const json = await connection.json()
         setQuery(json)
         createAnswers(json)
@@ -117,11 +118,12 @@ function Test() {
     //Change radio to active
     const activeRadio = (e,questionId) => {
         console.log(e)
-        console.log(questionId)
         choice.forEach(cho => {
             if (cho.id === questionId) {
-                if (e in cho.answers) {
-                    cho.answer.remove(e)
+                if (cho.answers.includes(e)) {
+                    console.log("in array")
+                    let index = cho.answers.indexOf(e)
+                    cho.answers.splice(index, 1)
                 } else if(cho.checkbox){
                     cho.answers.push(e)
                 } else {
@@ -129,6 +131,7 @@ function Test() {
                 }
             } 
         })
+
         console.log(choice)
     }
 
@@ -142,29 +145,62 @@ function Test() {
                     {query.textQuestions.map(question => {
                         textIndex++
                         return (
-                        <div>
-                            <label>{question.questionIf}</label><input value={text[textIndex].answer} onChange={updatetext(textIndex)}></input>
-                        </div>
+                            <div>
+                            <label>{question.questionIf}</label>
+                                <textarea
+                                style={{ height: "100px" }}
+                                type="text"
+                                className="form-control"
+                                value={text[textIndex].answer} onChange={updatetext(textIndex)}
+                              />
+                              </div>
                     )
                     })}
 
                     {query.choiceQuestions.map(question => {
                         //questions
                         return (
-                            <RadioGroup>
-                                <label>{question.questionIf}</label>
-                                {question.choiceOptions.map(option => {
-                                    //options
-                                    return (
-                                        <FormControlLabel
-                                            key={option.optionId}
-                                            value={option.optionId}
-                                            control={<Radio />}
-                                            label={option.option}
-                                            onClick={() => activeRadio(option.optionId, question.questionId)}
-                                        />
-                                )})}
-                            </RadioGroup>
+                            <Box>
+                            {question.checkbox
+                                ?   <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue="female"
+                                    name="radio-buttons-group">
+                                        <label>{question.questionIf}</label>
+                                        {question.choiceOptions.map(option => {
+                                            //options
+                                            return (
+                                                <FormControlLabel
+                                                    key={option.optionId}
+                                                    value={option.optionId}
+                                                    control={<Checkbox></Checkbox>}
+                                                    label={option.option}
+                                                    onClick={() => activeRadio(option.optionId, question.questionId)}
+                                                />
+                                        )})}
+                                    </RadioGroup>
+                                
+                                :   <RadioGroup
+                                    aria-labelledby="demo-radio-buttons-group-label"
+                                    defaultValue="female"
+                                    name="radio-buttons-group">
+                                        <label>{question.questionIf}</label>
+                                        {question.choiceOptions.map(option => {
+                                            //options
+                                            return (
+                                                <FormControlLabel
+                                                    key={option.optionId}
+                                                    value={option.optionId}
+                                                    control={<Radio />}
+                                                    label={option.option}
+                                                    onClick={() => activeRadio(option.optionId, question.questionId)}
+                                                />
+                                        )})}
+                                    </RadioGroup>
+                            
+                            }
+                                </Box>
+                            
                     )
                     })}
                     

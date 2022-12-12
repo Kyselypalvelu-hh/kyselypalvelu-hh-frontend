@@ -16,6 +16,8 @@ export const QuestionList = () => {
   const [onError, setOnError] = useState("Loading...");
   const [shownQuestions, setShownQuestions] = useState([]);
   const [choiceQuestions, setChoiceQuestions] = useState([]);
+  const [queryId,setQueryId] = useState(0)
+
   const local = "http://localhost:8080/";
   const server = "https://swd022-kyselypalvelu-back.herokuapp.com/";
   const url = local;
@@ -94,6 +96,7 @@ export const QuestionList = () => {
                   //DATA NEEDED IN THE LIST BELOW
                   setShownQuestions(shownQ);
                   setChoiceQuestions(shownChoiceQ);
+                  setQueryId(query.id)
                 }}
               >
                 {query.title}
@@ -107,6 +110,7 @@ export const QuestionList = () => {
             <AnswerForm
               shownQuestions={shownQuestions}
               choiceQuestions={choiceQuestions}
+              queryId={queryId}
             />
           )}
         </CardContent>
