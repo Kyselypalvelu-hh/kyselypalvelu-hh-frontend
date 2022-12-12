@@ -32,7 +32,7 @@ function StyleAnswers(props) {
     },[status])
 
     const array = []
-    props.answers.map(answer => {
+    props.answers.forEach(answer => {
         if (answer.choiceAnswer.length > 0) {
             array.push({
                 answers: answer.choiceAnswer,
@@ -70,16 +70,16 @@ function StyleAnswers(props) {
         const moddedArray = [] //to be returned
 
         //Map all questions
-        list.map(question => {
+        list.forEach(question => {
             let abc = [] //abc -> answerAmount
             //Map all options of question
             for (let i = 0; i < question.question.choiceOptions.length; i++){
                 let count = 0
                 let id = question.question.choiceOptions[i].optionId
                 //map all answers
-                question.answers.map(answer => {
+                question.answers.forEach(answer => {
                     //map all options given in an answer
-                    answer.options.map(option => {
+                    answer.options.forEach(option => {
                         if (option.optionId === id) count++
                     })
                 })
@@ -173,7 +173,8 @@ function StyleAnswers(props) {
             </Box>
         )
         */
-        
+        let answerAmountInd = 0
+        let index = 0
         return (
             <Box>
                 <Box sx={{display:"flex",alignItems:"center",justifyContent:"center",marginTop: 3}}>
@@ -192,8 +193,9 @@ function StyleAnswers(props) {
                         for (let i = 0; i < styled.options.length; i++) {
                             show.push([styled.options[i].option, styled.answerAmount[i].count])
                         }
+                        index++
                         return (
-                            <Grid item sx={{width: "50%"}}>
+                            <Grid key={index} item sx={{width: "50%"}}>
                                 <Card>
                                     <CardHeader title={styled.question}></CardHeader>
                                     <CardContent>
@@ -207,14 +209,15 @@ function StyleAnswers(props) {
                                     <TableContainer>
                                         <TableHead>
                                             {styled.options.map(option =>{
-                                                return (<TableCell>{option.option}</TableCell>)
+                                                return (<TableCell key={option.optionId}>{option.option}</TableCell>)
                                             })}
                                         </TableHead>
                                         
                                         <TableBody>
                                             <TableRow>
                                                 {styled.answerAmount.map(answer => {
-                                                    return(<TableCell>{answer.count}</TableCell>)
+                                                    answerAmountInd++
+                                                    return(<TableCell key={answerAmountInd}>{answer.count}</TableCell>)
                                                 })}
                                             </TableRow>
                                         </TableBody>

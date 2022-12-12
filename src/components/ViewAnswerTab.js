@@ -45,10 +45,10 @@ function ViewAnswersTab() {
                         value={tabNumber}
                         onChange={changeTab} 
                         sx={{ flexGrow: 1, textAling: 'center', backgroundColor: '#fff' }} 
-                        textColor='primary' centered>
+                        textColor='primary'>
                         {queries.map(query => {
                             return (
-                                <Tab sx={{width: '30%'}} label={query.title} icon={<AutoStoriesIcon color="primary"></AutoStoriesIcon>}></Tab>        
+                                <Tab key={query.id} sx={{width: '30%'}} label={query.title} icon={<AutoStoriesIcon color="primary"></AutoStoriesIcon>}></Tab>        
                                 )
                             })}
                     </Tabs>
@@ -56,7 +56,7 @@ function ViewAnswersTab() {
                 {queries.map(query => {
                     tabIndex++
                     return (
-                    <Box>
+                    <Box key={query.id}>
                         {tabNumber === tabIndex && <ViewAnswers id={query.id}></ViewAnswers>}
                     </Box>
                     )

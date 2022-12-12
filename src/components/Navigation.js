@@ -75,7 +75,7 @@ function Navigation(props) {
               <Button sx={{ color: "#fff" }} component={Link} to="viewanswers">
                 {navItems[1]}
               </Button>
-              <Button sx={{ color: "#fff" }} component={Link} to="restpage">
+              <Button sx={{ color: "#fff" }} component={Link} to="appguide">
                 {navItems[2]}
               </Button>
             </Box>
